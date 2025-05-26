@@ -7,7 +7,7 @@ class Sale(Base):
     id = Column(Integer, primary_key=True, index=True)
     product_id = Column(Integer, ForeignKey("products.id"))
     quantity = Column(Integer)
-    sale_date = Column(DateTime, default=datetime)
+    sale_date = Column(DateTime, default=datetime, index=True)
     total_price = Column(Float)
 
 
