@@ -8,12 +8,12 @@ from app.infrastructure.db.models.sales_model import Sale
 from app.api.v1.schema.sales_schema import SaleRead, RevenueSummary, SalesComparison
 from app.infrastructure.db.session import get_db
 
-router = APIRouter()
+api_router = APIRouter()
 
 # Request for getting the sales records
 # based on the optional parameters (start_date,end_date,category) 
 # passed as query parameter
-@router.get("/", response_model=list[SaleRead])
+@api_router.get("/", response_model=list[SaleRead])
 def get_sales(
     start_date: Optional[datetime] = Query(None),
     end_date: Optional[datetime] = Query(None),
@@ -39,7 +39,7 @@ def get_sales(
 # Request for getting aggregate total revenue by period 
 # based on the optional parameters (daily, weekly, monthly, yearly)
 # passed as query parameter
-@router.get("/revenue_summary", response_model=list[RevenueSummary])
+@api_router.get("/revenue_summary", response_model=list[RevenueSummary])
 def revenue_summary(
     period: str = Query("daily", regex="^(daily|weekly|monthly|yearly)$"),
     start_date: Optional[datetime] = Query(None),
@@ -86,7 +86,7 @@ def revenue_summary(
 # Request for comparing total revenue between two date ranges, optionally filtered by category
 # based on the optional parameters (period1_start, period1_end, period2_start, period2_end, category)
 # passed as query parameter
-@router.get("/compare_revenue", response_model=SalesComparison)
+@api_router.get("/compare_revenue", response_model=SalesComparison)
 def compare_revenue(
     period1_start: datetime = Query(..., example="2024-01-01T00:00:00"),
     period1_end: datetime = Query(..., example="2024-01-31T23:59:59"),
